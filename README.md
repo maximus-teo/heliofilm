@@ -1,6 +1,6 @@
-# Cinerate 
+# Heliofilm
 
-Cinerate is a website that allows users to stay up to date with popular and upcoming entertainment media, in terms of comparing ratings, reviews and streaming platforms. Inspired by IMDb and Letterboxd.
+Heliofilm is a website that allows users to stay up to date with popular and upcoming entertainment media, in terms of comparing ratings, reviews and streaming platforms. Inspired by IMDb and Letterboxd.
 
 ## 🌐 Live Site
 
@@ -26,8 +26,8 @@ You may choose to run this project on your machine as follows:
 
 ```bash
 # 1. Clone the repo
-git clone https://github.com/maximus-teo/cinerate.git
-cd cinerate/src
+git clone https://github.com/maximus-teo/heliofilm.git
+cd heliofilm/src
 
 # 2. Install dependencies
 npm install
