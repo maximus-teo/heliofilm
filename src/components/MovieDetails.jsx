@@ -2,8 +2,8 @@ import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "./MovieDetails.css";
-import heliofilmLogo from "../assets/heliofilm_logo.png";
-import profilePlaceholder from "../assets/profile.jpg";
+import heliofilmLogo from "../../assets/heliofilm_logo.png";
+import profilePlaceholder from "../../assets/profile.jpg";
 
 // Shimmer Skeleton for Movie Details page
 function DetailSkeleton() {
@@ -61,7 +61,7 @@ export default function MovieDetail() {
   const [images, setImages] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  
+
   const backendURL = "http://localhost:5000";
 
   useEffect(() => {
@@ -104,8 +104,8 @@ export default function MovieDetail() {
   }
 
   const releaseYear = movie.release_date ? new Date(movie.release_date).getFullYear() : "";
-  const formattedRuntime = movie.runtime 
-    ? `${Math.floor(movie.runtime / 60)}h ${movie.runtime % 60}m` 
+  const formattedRuntime = movie.runtime
+    ? `${Math.floor(movie.runtime / 60)}h ${movie.runtime % 60}m`
     : "";
 
   const englishLogo = images?.logos?.find((logo) => logo.iso_639_1 === "en")?.file_path;
