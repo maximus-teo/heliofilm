@@ -2,6 +2,10 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import heliofilmLogo from "../assets/heliofilm_logo.png";
+import { Button } from "./components/ui/button";
+import Illuminate from "./components/Illuminate";
+
 
 // Shimmer Skeleton for Movie Poster Card
 function CardSkeleton() {
@@ -45,6 +49,8 @@ export default function App() {
   const [loadingUpcoming, setLoadingUpcoming] = useState(true);
   const [error, setError] = useState(null);
 
+  const [navActive, setNavActive] = useState("browse");
+
   // Active slide detail cache
   const [slideIndex, setSlideIndex] = useState(0);
   const [activeDetails, setActiveDetails] = useState(null);
@@ -54,11 +60,10 @@ export default function App() {
   const [searchResults, setSearchResults] = useState([]);
   const [searchPage, setSearchPage] = useState(1);
   const [totalSearchPages, setTotalSearchPages] = useState(1);
-  const [loadingSearch, setLoadingSearch] = useState(false);
+  const [loadingSearch, setLoadingSearch] = useState(true);
   const [selectedLanguage, setSelectedLanguage] = useState("all");
   const [selectedGenre, setSelectedGenre] = useState("all");
   const [sortBy, setSortBy] = useState("default");
-  const [navActive, setNavActive] = useState("browse");
 
   const backendURL = "http://localhost:5000";
 
@@ -83,6 +88,8 @@ export default function App() {
 
   // Fetch Upcoming Movies
   useEffect(() => {
+    window.scrollTo(0, 0);
+
     setLoadingUpcoming(true);
     axios
       .get(`${backendURL}/api/upcoming`)
@@ -151,20 +158,17 @@ export default function App() {
   const [debouncedQuery, setDebouncedQuery] = useState("");
 
   useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedQuery(searchQuery);
-    }, 300);
-    return () => clearTimeout(handler);
-  }, [searchQuery]);
-
-  // Reset filters and page when search query is cleared or changed
-  useEffect(() => {
     if (!searchQuery) {
       setSelectedLanguage("all");
       setSelectedGenre("all");
       setSortBy("default");
     }
     setSearchPage(1);
+
+    const handler = setTimeout(() => {
+      setDebouncedQuery(searchQuery);
+    }, 300);
+    return () => clearTimeout(handler);
   }, [searchQuery]);
 
   // Fetch search results from API when debounced query or page changes
@@ -307,18 +311,18 @@ export default function App() {
       <header className="navbar-wrapper">
         <nav className="navbar-content">
           <a href="/" className="logo">
-            <img src="assets/heliofilm_logo.png" alt="Heliofilm Cinema" />
+            <img src={heliofilmLogo} alt="Heliofilm" />
           </a>
 
           <div className="nav-links">
             <span
-              className={`nav-link ${!searchQuery && navActive === "browse" ? "active" : ""}`}
+              className={`nav-link prevent-select ${!searchQuery && navActive === "browse" ? "active" : ""}`}
               onClick={() => { setSearchQuery(""); setNavActive("browse"); }}
             >
               Browse
             </span>
             <span
-              className={`nav-link ${!searchQuery && navActive === "illuminate" ? "active" : ""}`}
+              className={`nav-link prevent-select ${!searchQuery && navActive === "illuminate" ? "active" : ""}`}
               onClick={() => { setSearchQuery(""); setNavActive("illuminate"); }}
             >
               Illuminate
@@ -337,7 +341,7 @@ export default function App() {
                 type="text"
                 placeholder="Search movies..."
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e) => { setSearchQuery(e.target.value); setNavActive(""); }}
               />
             </div>
           </div>
@@ -509,7 +513,7 @@ export default function App() {
                         className="backbackdrop"
                       />
                       <img
-                        src={`https://image.tmdb.org/t/p/w1280${movie.backdrop_path}`}
+                        src={`https://image.tmdb.org/t/p/w1920${movie.backdrop_path}`}
                         alt={movie.title}
                         className="backdrop"
                       />
@@ -658,6 +662,10 @@ export default function App() {
           </>
         )
       }
+
+      {navActive === 'illuminate' && (
+        <div><Illuminate /></div>
+      )}
     </div >
   );
 }

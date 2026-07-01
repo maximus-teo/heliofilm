@@ -61,8 +61,14 @@ export default function MovieDetail() {
   const [images, setImages] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [navActive, setNavActive] = useState("browse");
 
   const backendURL = "http://localhost:5000";
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  }, [])
 
   useEffect(() => {
     setLoading(true);
@@ -119,14 +125,43 @@ export default function MovieDetail() {
 
   return (
     <div className="main-container">
-      {/* Top Navigation */}
+      {/* Top Navbar */}
       <header className="navbar-wrapper">
         <nav className="navbar-content">
-          <Link to="/" className="logo">
-            <img src={heliofilmLogo} alt="Heliofilm Cinema" />
-          </Link>
+          <a href="/" className="logo">
+            <img src={heliofilmLogo} alt="Heliofilm" />
+          </a>
+
           <div className="nav-links">
-            <Link to="/" className="nav-link">Browse</Link>
+            <span
+              className={`nav-link prevent-select ${!searchQuery && navActive === "browse" ? "active" : ""}`}
+              onClick={() => { setSearchQuery(""); setNavActive("browse"); }}
+            >
+              Browse
+            </span>
+            <span
+              className={`nav-link prevent-select ${!searchQuery && navActive === "illuminate" ? "active" : ""}`}
+              onClick={() => { setSearchQuery(""); setNavActive("illuminate"); }}
+            >
+              Illuminate
+            </span>
+            <div className="nav-search">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={2}
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+              <input
+                type="text"
+                placeholder="Search movies..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
           </div>
         </nav>
       </header>

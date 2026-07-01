@@ -45,6 +45,15 @@
   padding-bottom: 4rem;
 }
 
+.prevent-select {
+  -webkit-user-select: none;
+  /* Safari */
+  -ms-user-select: none;
+  /* IE 10 and older Edge */
+  user-select: none;
+  /* Standard syntax (Chrome, Firefox, Opera, modern Edge) */
+}
+
 /* Header & Navigation (Matches Home page exactly) */
 header.navbar-wrapper {
   position: fixed;
@@ -119,7 +128,7 @@ nav.navbar-content .logo img {
 
 .backdrop {
   position: absolute;
-  top: 0;
+  top: 60px;
   left: 0;
   width: 100%;
   height: 100%;
@@ -233,7 +242,7 @@ nav.navbar-content .logo img {
 }
 
 .movie-meta-row span:not(:last-child)::after {
-  content: '•';
+  /* content: '•'; */
   margin-left: 0.8rem;
   color: var(--text-dim);
 }
@@ -307,6 +316,7 @@ nav.navbar-content .logo img {
   scroll-behavior: smooth;
   scrollbar-width: thin;
   scrollbar-color: var(--bg-dark-600) transparent;
+
 }
 
 /* Custom Scrollbars */
@@ -330,6 +340,7 @@ nav.navbar-content .logo img {
 /* Cast / Crew Cards (Strictly 2-4px lift max) */
 .cast-card {
   flex: 0 0 120px;
+  max-width: 120px;
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
@@ -387,6 +398,7 @@ nav.navbar-content .logo img {
   0% {
     background-position: -200% 0;
   }
+
   100% {
     background-position: 200% 0;
   }

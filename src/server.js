@@ -42,7 +42,6 @@ app.get("/api/search/movie", async (req, res) => {
     // 2. Append the API key directly to the URL query parameters
     const tmdbUrl = `${TMDB_BASE}/search/movie?api_key=${process.env.TMDB_API_KEY}&query=${encodeURIComponent(query)}&page=${searchPage}`;
 
-    console.log("tmdb url:", tmdbUrl);
     const response = await fetch(tmdbUrl);
 
     if (!response.ok) {
